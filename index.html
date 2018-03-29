@@ -40,6 +40,9 @@
       </div>
       <div>
         <button @click='(e)=>{add(e,"+")}'>+</button>
+        <button @click='(e)=>{add(e,"-")}'>-</button>
+        <button @click='(e)=>{add(e,"*")}'>*</button>
+        <button @click='(e)=>{add(e,"/")}'>/</button>
         <button @click='(e)=>{add(e,"√")}'>√</button>
         <button @click='(e)=>{add(e,"²")}'>x²</button>
         <button @click='(e)=>{add(e,"(")}'>(</button>
@@ -47,6 +50,7 @@
         <button @click='reset'>CE</button>
         <button @click='resetHistory'>C</button>
         <button @click='calculate'>=</button>
+        
       </div>
 
       <ul>

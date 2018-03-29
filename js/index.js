@@ -44,7 +44,11 @@ let loadObjects=()=>{
         this.currentCalc = String(this.currentCalc)+String(this.currentValue);
         this.currentValue="";
         this.polishArray = convertToPolishArray(this.currentCalc); // gör om sträng till polishArray
+        if(this.result!==0){
+          this.polishArray.unshift(this.result)
+        }
         this.result = calcPolishArray(this.polishArray);           // räknar ut allt
+
         let historyObj= {
           calc : this.currentCalc,
           result : this.result
@@ -182,8 +186,15 @@ let convertToPolishArray=(str)=>{
     }
   }
 
+  let previousIsNumber = false;
   stackQueue = stackQueue.map(item=>{   // tar bort operator objekt och lägger in endast operator
     if(isNaN(item)){
+      // om operatorn är ( så skall ett * läggas till om föregående tecken är ett tal
+      if(item.operator=="("){
+        if(previousIsNumber){
+
+        }
+      }
       return item.operator;
     }else{
       return item;

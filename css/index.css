@@ -1,7 +1,6 @@
 #container-Calculate{
   display: flex;
   align-items: center;
-  width: 50%;
   position: relative;
   flex-wrap: wrap;
   margin: 200px auto;
@@ -14,10 +13,13 @@
 }
 #container-Calculate button{
   width: 50px;
+  height: 50px;
   padding: 7px;
   font-size: 1.2em;
-  border-radius: 10px;
+  border-radius: 50px;
   margin: 3px;
+  background-color:  #222831;
+  color: snow;
 }
 #container-Calculate button:focus{
   outline:none;
@@ -40,6 +42,9 @@
 .info{
   flex: 1 100%;
 }
+.zero{
+  margin-left: 33%;
+}
 .result{
   flex: 1 95%;
   list-style: none;
@@ -52,14 +57,14 @@
   font-size: 1.8em;
 }
 body{
-  background-color: #364F6B;
+  background-color: #222831;
   font-family: monospace;
 }
 #inputNumber{
   border-radius: 5px;
   padding: 5px;
   margin: 20px 3px;
-  width: 90%;
+  width: 95%;
 }
 
 
@@ -68,4 +73,5 @@ body{
   flex: 1 100%;
   padding: 9px;
   border-radius: 5px;
+  margin-top: 20px;
 }

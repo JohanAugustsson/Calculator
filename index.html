@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Calculator with Vue</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+    <script src="./js/index.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="./css/index.css"></link>
+  </head>
+  <body>
+
+    <div id="container-Calculate">
+      <div class="result">
+        <ul>
+          <li>Current Calc: {{currentCalc}}</li>
+          <li>Current Polish Array: {{polishArray}}</li>
+          <li>Current Value: {{currentValue}}</li>
+          <li>Result: {{result}}</li>
+        </ul>
+        <input id="inputNumber" type="text" v-on:keypress="checkKey" v-model:value="currentValue"/>
+      </div>
+      <div class="">
+        <button @click='(e)=>{digit(e,1)}'>1</button>
+        <button @click='(e)=>{digit(e,2)}'>2</button>
+        <button @click='(e)=>{digit(e,3)}'>3</button>
+      </div>
+      <div class="">
+        <button @click='(e)=>{digit(e,4)}'>4</button>
+        <button @click='(e)=>{digit(e,5)}'>5</button>
+        <button @click='(e)=>{digit(e,6)}'>6</button>
+      </div>
+      <div class="">
+        <button @click='(e)=>{digit(e,7)}'>7</button>
+        <button @click='(e)=>{digit(e,8)}'>8</button>
+        <button @click='(e)=>{digit(e,9)}'>9</button>
+      </div>
+      <div>
+        <button @click='(e)=>{digit(e,0)}'>0</button>
+      </div>
+      <div>
+        <button @click='(e)=>{add(e,"+")}'>+</button>
+        <button @click='(e)=>{add(e,"√")}'>√</button>
+        <button @click='(e)=>{add(e,"²")}'>x²</button>
+        <button @click='(e)=>{add(e,"(")}'>(</button>
+        <button @click='(e)=>{add(e,")")}'>)</button>
+        <button @click='reset'>CE</button>
+        <button @click='resetHistory'>C</button>
+        <button @click='calculate'>=</button>
+      </div>
+
+      <ul>
+        <li v-for="item in history">
+          {{item.calc}} =
+          {{item.result}}
+        </li>
+
+      </ul>
+    </div>
+
+
+  </body>
+</html>

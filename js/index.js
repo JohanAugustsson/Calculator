@@ -58,15 +58,45 @@ let loadObjects=()=>{
       },
       checkKey: function(event){
         //console.log(event.keyCode);
-        if(event.keyCode>= 45 && event.keyCode <= 57 ||  event.keyCode>=40 && event.keyCode <= 43){  // keypress endast siffror och punkt
-          this.currentValue= this.currentValue + event.key;
-        }else if(event.keyCode===13){     // keypress enter
-          this.calculate();
+        let codeOfkey = event.keyCode;
+        let testIsOk = true;
+        if(this.history.length==0 && this.currentValue.length==0){ // om det inte finns någon history så måste man börja med siffror eller (
 
-        }else {                       // keypress övriga
-          console.log("ej tal");
+          if(event.keyCode>= 48 && event.keyCode <= 57 || event.keyCode==40){
+          }else {
+            console.log("send msg to user please enter numbers or ( to start your form");
+            testIsOk = false;
+          }
+
+        }else if(this.history.length>0 && this.currentValue.length==0){ // om det finns history så måste man börja med operator + - / *
+          if( event.keyCode==42 ||  event.keyCode==43 ||  event.keyCode==45 ||  event.keyCode==47){
+          }else{
+            console.log('please enter operator + - * / or CE,C to restart');
+            testIsOk = false;
+
+          }
+        }
+
+
+
+
+        if(testIsOk){
+          if(event.keyCode>= 45 && event.keyCode <= 57 ||  event.keyCode>=40 && event.keyCode <= 43){  // keypress endast siffror och punkt
+            this.currentValue= this.currentValue + event.key;
+          }else if(event.keyCode===13){     // keypress enter
+            this.calculate();
+
+          }else {                       // keypress övriga
+            console.log("ej talet");
+            event.preventDefault();
+          }
+
+        }else{ // test fail
           event.preventDefault();
         }
+
+
+
       }
     }
   }
@@ -187,9 +217,11 @@ let convertToPolishArray=(str)=>{
   }
 
   let previousIsNumber = false;
+
   stackQueue = stackQueue.map(item=>{   // tar bort operator objekt och lägger in endast operator
     if(isNaN(item)){
       // om operatorn är ( så skall ett * läggas till om föregående tecken är ett tal
+      // om operatorn är ) så skall ett * läggas till om nästa tecken är ett tal
       if(item.operator=="("){
         if(previousIsNumber){
 

@@ -11,50 +11,56 @@
   <body>
 
     <div id="container-Calculate">
-      <div class="result">
-        <ul>
-          <li>Current Calc: {{currentCalc}}</li>
-          <li>Current Polish Array: {{polishArray}}</li>
-          <li>Current Value: {{currentValue}}</li>
-          <li>Result: {{result}}</li>
-        </ul>
-        <input id="inputNumber" type="text" v-on:keypress="checkKey" v-model:value="currentValue"/>
+      <div class="info">
+          <!--
+          <p>Current Calc: {{currentCalc}}</p>
+          <p>Current Polish Array: {{polishArray}}</p>
+          <p>Current Value: {{currentValue}}</p>
+          -->
+          <p class="result">Result: {{result}}</p>
+
       </div>
-      <div class="">
-        <button @click='(e)=>{digit(e,1)}'>1</button>
-        <button @click='(e)=>{digit(e,2)}'>2</button>
-        <button @click='(e)=>{digit(e,3)}'>3</button>
-      </div>
-      <div class="">
-        <button @click='(e)=>{digit(e,4)}'>4</button>
-        <button @click='(e)=>{digit(e,5)}'>5</button>
-        <button @click='(e)=>{digit(e,6)}'>6</button>
-      </div>
-      <div class="">
-        <button @click='(e)=>{digit(e,7)}'>7</button>
-        <button @click='(e)=>{digit(e,8)}'>8</button>
-        <button @click='(e)=>{digit(e,9)}'>9</button>
-      </div>
-      <div>
+
+      <input id="inputNumber" type="text" v-on:keypress="checkKey" v-model:value="currentValue"/>
+      <div class="btn">
+        <div class="">
+          <button @click='(e)=>{digit(e,1)}'>1</button>
+          <button @click='(e)=>{digit(e,2)}'>2</button>
+          <button @click='(e)=>{digit(e,3)}'>3</button>
+        </div>
+        <div class="">
+          <button @click='(e)=>{digit(e,4)}'>4</button>
+          <button @click='(e)=>{digit(e,5)}'>5</button>
+          <button @click='(e)=>{digit(e,6)}'>6</button>
+        </div>
+
+        <div class="">
+          <button @click='(e)=>{digit(e,7)}'>7</button>
+          <button @click='(e)=>{digit(e,8)}'>8</button>
+          <button @click='(e)=>{digit(e,9)}'>9</button>
+        </div>
         <button @click='(e)=>{digit(e,0)}'>0</button>
+
+
       </div>
-      <div>
+      <div class="btn">
+        <button @click='(e)=>{add(e,"√")}'>√</button>
+        <button @click='reset'>CE</button>
+        <button @click='resetHistory'>C</button>
+        <button @click='(e)=>{add(e,"²")}'>x²</button>
+        <button @click='(e)=>{add(e,"(")}'>(</button>
+        <button @click='(e)=>{add(e,")")}'>)</button>
         <button @click='(e)=>{add(e,"+")}'>+</button>
         <button @click='(e)=>{add(e,"-")}'>-</button>
         <button @click='(e)=>{add(e,"*")}'>*</button>
         <button @click='(e)=>{add(e,"/")}'>/</button>
-        <button @click='(e)=>{add(e,"√")}'>√</button>
-        <button @click='(e)=>{add(e,"²")}'>x²</button>
-        <button @click='(e)=>{add(e,"(")}'>(</button>
-        <button @click='(e)=>{add(e,")")}'>)</button>
-        <button @click='reset'>CE</button>
-        <button @click='resetHistory'>C</button>
         <button @click='calculate'>=</button>
-        
+
       </div>
 
-      <ul>
-        <li v-for="item in history">
+      <ul class="histList">
+        <h3>History</h3>
+        <li v-for="item in history" >
           {{item.calc}} =
           {{item.result}}
         </li>

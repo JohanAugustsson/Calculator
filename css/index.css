@@ -1,15 +1,23 @@
 #container-Calculate{
   display: flex;
   align-items: center;
-  color: red;
   width: 50%;
+  position: relative;
   flex-wrap: wrap;
+  margin: 200px auto;
+  max-width: 400px;
 }
-#container-Calculate div{
-  flex: 1 100%;
+#container-Calculate .btn{
+  flex: 1 50%;
+  max-width: 200px;
+  min-width: 200px;
 }
 #container-Calculate button{
   width: 50px;
+  padding: 7px;
+  font-size: 1.2em;
+  border-radius: 10px;
+  margin: 3px;
 }
 #container-Calculate button:focus{
   outline:none;
@@ -17,4 +25,47 @@
 
 #container-Calculate .result{
   flex: 1 100%;
+}
+
+.histList li{
+  list-style: none;
+  background-color: #3FC1C9;
+  padding: 5px;
+  padding-left: 10px;
+  border-radius: 5px;
+  color: white;
+  margin: 2px;
+  min-width: 100px;
+}
+.info{
+  flex: 1 100%;
+}
+.result{
+  flex: 1 95%;
+  list-style: none;
+  background-color: #3FC1C9;
+  padding: 5px;
+  padding-left: 10px;
+  border-radius: 5px;
+  color: white;
+  margin: 2px;
+  font-size: 1.8em;
+}
+body{
+  background-color: #364F6B;
+  font-family: monospace;
+}
+#inputNumber{
+  border-radius: 5px;
+  padding: 5px;
+  margin: 20px 3px;
+  width: 90%;
+}
+
+
+.histList{
+  background-color: #F5F5F5;
+  flex: 1 100%;
+  padding: 9px;
+  border-radius: 5px;
 }

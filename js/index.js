@@ -50,6 +50,7 @@ let loadObjects=()=>{
           result : this.result
         }
         this.history.push(historyObj)
+        this.currentCalc ="";
       },
       checkKey: function(event){
         //console.log(event.keyCode);

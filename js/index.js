@@ -3,11 +3,11 @@ window.addEventListener('load',function(){
 
 
   loadObjects();
-
 }) // windows load end
 
 
 let loadObjects=()=>{
+
   let settings={
     el: "#container-Calculate",
     data: {
@@ -15,11 +15,14 @@ let loadObjects=()=>{
       currentValue: "",
       currentCalc: "",
       history: [],
-      polishArray: []
+      polishArray: [],
+      msgToUsr : ""
     },
     methods: {
-      digit: function(event,x){
-        this.currentValue =String(this.currentValue)+String(x);
+      digit: function(event,str){
+        let b = String(str).charCodeAt(0)
+        this.checkKey(event,b,str)
+        //this.currentValue =String(this.currentValue)+String(str);
         document.getElementById('inputNumber').focus();  // Hur gör man enligt Vue??
 
       },
@@ -30,8 +33,8 @@ let loadObjects=()=>{
       reset: function(event){
         this.currentCalc= "";
         this.currentValue="";
-        this.polishArray = [];
-        this.result=0;
+        //this.polishArray = [];
+        //this.result=0;
       },
       resetHistory: function(event){
         this.currentCalc= "";
@@ -56,38 +59,43 @@ let loadObjects=()=>{
         this.history.push(historyObj)
         this.currentCalc ="";
       },
-      checkKey: function(event){
+      checkKey: function(event,strCode,str){
         //console.log(event.keyCode);
-        let codeOfkey = event.keyCode;
+        let codeOfkey ="";
+        let key = "";
+        if(str===undefined){
+          codeOfkey = event.keyCode;
+          key = event.key;
+        }else{
+          codeOfkey = strCode;
+          key = str
+        }
         let testIsOk = true;
         if(this.history.length==0 && this.currentValue.length==0){ // om det inte finns någon history så måste man börja med siffror eller (
 
-          if(event.keyCode>= 48 && event.keyCode <= 57 || event.keyCode==40){
+          if(codeOfkey>= 48 && codeOfkey <= 57 || codeOfkey==40){
           }else {
-            console.log("send msg to user please enter numbers or ( to start your form");
+            this.showMsgToUser('INFO: Please enter numbers or "(" to start your form');
             testIsOk = false;
           }
 
         }else if(this.history.length>0 && this.currentValue.length==0){ // om det finns history så måste man börja med operator + - / *
-          if( event.keyCode==42 ||  event.keyCode==43 ||  event.keyCode==45 ||  event.keyCode==47){
+          if( codeOfkey==42 ||  codeOfkey==43 ||  codeOfkey==45 ||  codeOfkey==47){
           }else{
-            console.log('please enter operator + - * / or CE,C to restart');
+            this.showMsgToUser('INFO: Please enter + - * / to add to current result or C to restart');
             testIsOk = false;
 
           }
         }
 
-
-
-
         if(testIsOk){
-          if(event.keyCode>= 45 && event.keyCode <= 57 ||  event.keyCode>=40 && event.keyCode <= 43){  // keypress endast siffror och punkt
-            this.currentValue= this.currentValue + event.key;
-          }else if(event.keyCode===13){     // keypress enter
+          if(codeOfkey>= 45 && codeOfkey <= 57 ||  codeOfkey>=40 && codeOfkey <= 43){  // keypress endast siffror och punkt
+            this.currentValue= this.currentValue + key;
+          }else if(codeOfkey===13){     // keypress enter
             this.calculate();
 
           }else {                       // keypress övriga
-            console.log("ej talet");
+            this.showMsgToUser('INFO: Please only numbers and operators');
             event.preventDefault();
           }
 
@@ -96,7 +104,13 @@ let loadObjects=()=>{
         }
 
 
-
+      },
+      showMsgToUser : function(str){
+        this.msgToUsr = str;
+        let timer = setInterval(()=> {
+          this.msgToUsr="";
+          clearInterval(timer);
+        }, 5000);
       }
     }
   }
@@ -104,8 +118,9 @@ let loadObjects=()=>{
   let vm = new Vue(settings);
 
 
+} // end of loadObjects ---------------------------------------------------------------//
 
-}
+
 
 // ---------------------  Räknar ut Polish Array ----------------------------->>
 let calcPolishArray=(list)=>{

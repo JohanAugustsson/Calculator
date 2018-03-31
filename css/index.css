@@ -45,6 +45,7 @@
 .zero{
   margin-left: 33%;
 }
+
 .result{
   flex: 1 95%;
   list-style: none;
@@ -74,4 +75,20 @@ body{
   padding: 9px;
   border-radius: 5px;
   margin-top: 20px;
+}
+#msgToUser{
+  display: inline-block;
+  position: absolute;
+  top: -190px;
+  background: red;
+  padding: 5px;
+  min-width: 100px;
+  border-radius: 5px;
+  color: snow;
+  font-size: 1.1em;
+  right: -400px;
+}
+
+#msgToUser:empty{
+  display: none;
 }

@@ -41,20 +41,21 @@
         </div>
         <div>
           <button class="zero" @click='(e)=>{digit(e,0)}'>0</button>
+          <button class="zero" @click='(e)=>{digit(e,".")}'>.</button>
         </div>
 
       </div>
       <div class="btn">
-        <button @click='(e)=>{add(e,"√")}'>√</button>
+        <button @click='(e)=>{digit(e,"√")}'>√</button>
         <button @click='reset'>CE</button>
         <button @click='resetHistory'>C</button>
-        <button @click='(e)=>{add(e,"²")}'>x²</button>
-        <button @click='(e)=>{add(e,"(")}'>(</button>
-        <button @click='(e)=>{add(e,")")}'>)</button>
-        <button @click='(e)=>{add(e,"+")}'>+</button>
-        <button @click='(e)=>{add(e,"-")}'>-</button>
-        <button @click='(e)=>{add(e,"*")}'>*</button>
-        <button @click='(e)=>{add(e,"/")}'>/</button>
+        <button @click='(e)=>{digit(e,"²")}'>x²</button>
+        <button @click='(e)=>{digit(e,"(")}'>(</button>
+        <button @click='(e)=>{digit(e,")")}'>)</button>
+        <button @click='(e)=>{digit(e,"+")}'>+</button>
+        <button @click='(e)=>{digit(e,"-")}'>-</button>
+        <button @click='(e)=>{digit(e,"*")}'>*</button>
+        <button @click='(e)=>{digit(e,"/")}'>/</button>
         <button @click='calculate'>=</button>
 
       </div>
@@ -67,6 +68,7 @@
         </li>
 
       </ul>
+      <div id="msgToUser">{{msgToUsr}}</div>
     </div>
 
 

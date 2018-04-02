@@ -75,14 +75,14 @@ let loadObjects=()=>{
 
           if(codeOfkey>= 48 && codeOfkey <= 57 || codeOfkey==40){
           }else {
-            this.showMsgToUser('INFO: Please enter numbers or "(" to start your form');
+            this.showMsgToUser('INFO: Please enter numbers or "(" to start your formula.');
             testIsOk = false;
           }
 
         }else if(this.history.length>0 && this.currentValue.length==0){ // om det finns history så måste man börja med operator + - / *
           if( codeOfkey==42 ||  codeOfkey==43 ||  codeOfkey==45 ||  codeOfkey==47){
           }else{
-            this.showMsgToUser('INFO: Please enter + - * / to add to current result or C to restart');
+            this.showMsgToUser('INFO: Please enter + - * / to add to current result or C to restart.');
             testIsOk = false;
 
           }
@@ -95,7 +95,7 @@ let loadObjects=()=>{
             this.calculate();
 
           }else {                       // keypress övriga
-            this.showMsgToUser('INFO: Please only numbers and operators');
+            this.showMsgToUser('INFO: Please only numbers and operators.');
             event.preventDefault();
           }
 

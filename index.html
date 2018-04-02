@@ -2,6 +2,7 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Calculator with Vue</title>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
     <script src="./js/index.js"></script>
@@ -24,6 +25,15 @@
       <input id="inputNumber" type="text" v-on:keypress="checkKey" v-model:value="currentValue"/>
       <div class="btn">
         <div class="">
+          <button @click='(e)=>{digit(e,"(")}'>(</button>
+          <button @click='(e)=>{digit(e,")")}'>)</button>
+          <button @click='(e)=>{digit(e,"√")}'>√</button>
+          <button @click='(e)=>{digit(e,"²")}'>x²</button>
+          <button @click='reset'>CE</button>
+          <button @click='resetHistory'>C</button>
+
+        </div>
+        <div class="">
           <button @click='(e)=>{digit(e,1)}'>1</button>
           <button @click='(e)=>{digit(e,2)}'>2</button>
           <button @click='(e)=>{digit(e,3)}'>3</button>
@@ -42,22 +52,20 @@
         <div>
           <button class="zero" @click='(e)=>{digit(e,0)}'>0</button>
           <button class="zero" @click='(e)=>{digit(e,".")}'>.</button>
+            <button @click='calculate'>=</button>
         </div>
+        <div class="">
 
+
+
+        </div>
       </div>
-      <div class="btn">
-        <button @click='(e)=>{digit(e,"√")}'>√</button>
-        <button @click='reset'>CE</button>
-        <button @click='resetHistory'>C</button>
-        <button @click='(e)=>{digit(e,"²")}'>x²</button>
-        <button @click='(e)=>{digit(e,"(")}'>(</button>
-        <button @click='(e)=>{digit(e,")")}'>)</button>
+      <div class="btnOperators">
         <button @click='(e)=>{digit(e,"+")}'>+</button>
         <button @click='(e)=>{digit(e,"-")}'>-</button>
         <button @click='(e)=>{digit(e,"*")}'>*</button>
         <button @click='(e)=>{digit(e,"/")}'>/</button>
-        <button @click='calculate'>=</button>
-
+        <button v-show="result>0">>0</button>
       </div>
 
       <ul class="histList">

@@ -23,12 +23,12 @@ let loadObjects=()=>{
         let b = String(str).charCodeAt(0)
         this.checkKey(event,b,str)
         //this.currentValue =String(this.currentValue)+String(str);
-        document.getElementById('inputNumber').focus();  // Hur gör man enligt Vue??
+        //document.getElementById('inputNumber').focus();  // Hur gör man enligt Vue??
 
       },
       add: function(event,key){
         this.currentValue += key;
-        document.getElementById('inputNumber').focus();  // Hur gör man enligt Vue??
+        //document.getElementById('inputNumber').focus();  // Hur gör man enligt Vue??
       },
       reset: function(event){
         this.currentCalc= "";

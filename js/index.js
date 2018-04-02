@@ -1,9 +1,25 @@
 window.addEventListener('load',function(){
 
 
-
   loadObjects();
+
+  if(screen.width<900){
+    document.getElementById("inputNumber").readOnly = true;
+  }else {
+    document.getElementById("inputNumber").readOnly = false;
+  };
+
 }) // windows load end
+
+window.onresize = function(){
+
+  if(screen.width<900){
+    document.getElementById("inputNumber").readOnly = true;
+  }else {
+    document.getElementById("inputNumber").readOnly = false;
+  };
+}
+
 
 
 let loadObjects=()=>{

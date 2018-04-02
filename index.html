@@ -22,7 +22,7 @@
 
       </div>
 
-      <input id="inputNumber" type="text" v-on:keypress="checkKey" v-model:value="currentValue"/>
+      <input id="inputNumber" type="text" readonly v-on:keypress="checkKey" v-model:value="currentValue"/>
       <div class="btn">
         <div class="">
           <button @click='(e)=>{digit(e,"(")}'>(</button>

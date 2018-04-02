@@ -61,6 +61,7 @@ let loadObjects=()=>{
       },
       checkKey: function(event,strCode,str){
         //console.log(event.keyCode);
+        //console.log(strCode);
         let codeOfkey ="";
         let key = "";
         if(str===undefined){
@@ -89,7 +90,7 @@ let loadObjects=()=>{
         }
 
         if(testIsOk){
-          if(codeOfkey>= 45 && codeOfkey <= 57 ||  codeOfkey>=40 && codeOfkey <= 43){  // keypress endast siffror och punkt
+          if(codeOfkey>= 45 && codeOfkey <= 57 ||  codeOfkey>=40 && codeOfkey <= 43 || codeOfkey==178 || codeOfkey==8730){  // keypress endast siffror och punkt
             this.currentValue= this.currentValue + key;
           }else if(codeOfkey===13){     // keypress enter
             this.calculate();

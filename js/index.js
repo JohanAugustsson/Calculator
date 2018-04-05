@@ -423,7 +423,7 @@ let findParantes=(newList)=>{
 
           } else { // föregående pos är ett tal
               //lägg till ett * i listan
-              newList.splice(pos,0,opObj)
+              newList.splice(pos+1,0,opObj)
             break;
           }
 

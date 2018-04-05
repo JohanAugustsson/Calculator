@@ -27,7 +27,8 @@
           <button @click='(e)=>{digit(e,"(")}'>(</button>
           <button @click='(e)=>{digit(e,")")}'>)</button>
           <button @click='(e)=>{digit(e,"√")}'>√</button>
-          <button @click='(e)=>{digit(e,"²")}'>x²</button>
+
+          <button @click='removeValue'>DEL</button>
           <button @click='reset'>CE</button>
           <button @click='resetHistory'>C</button>
 
@@ -64,7 +65,8 @@
         <button @click='(e)=>{digit(e,"-")}'>-</button>
         <button @click='(e)=>{digit(e,"*")}'>*</button>
         <button @click='(e)=>{digit(e,"/")}'>/</button>
-        <button v-show="result>0">>0</button>
+        <button @click='(e)=>{digit(e,"²")}'>x²</button>
+        <!-- <button v-show="result>0">>0</button> -->
       </div>
 
       <ul class="histList">

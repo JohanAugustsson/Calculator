@@ -70,6 +70,11 @@ let loadObjects=()=>{
         this.history.push(historyObj)
         this.currentCalc ="";
       },
+      removeValue: function(event){
+        let current = this.currentValue
+        let length  = current.length;
+        this.currentValue = current.substring(0,length - 1)
+      },
       checkKey: function(event,strCode,str){
         //console.log(event.keyCode);
         //console.log(strCode);
@@ -268,7 +273,6 @@ let convertToPolishArray=(str,history)=>{
 
 //---------------- Konverterar en sträng till en lång array ------------------>>
 let convertStringToArray=(str,history)=>{
-  console.log(str);
   let currentValue="";
   let newList = [];
   for(let i =0; i< str.length;i++){

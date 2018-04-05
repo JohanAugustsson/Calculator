@@ -87,7 +87,7 @@ let loadObjects=()=>{
 
           if(codeOfkey>= 48 && codeOfkey <= 57 || codeOfkey==40  || codeOfkey==45 || codeOfkey==8730){
           }else {
-            this.showMsgToUser('INFO: Please enter numbers or "(" to start your formula.');
+            this.showMsgToUser('INFO: Please enter numbers or - ( √ to start your calculation.');
             testIsOk = false;
           }
 

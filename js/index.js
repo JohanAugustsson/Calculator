@@ -268,6 +268,7 @@ let convertToPolishArray=(str,history)=>{
 
 //---------------- Konverterar en sträng till en lång array ------------------>>
 let convertStringToArray=(str,history)=>{
+  console.log(str);
   let currentValue="";
   let newList = [];
   for(let i =0; i< str.length;i++){
@@ -326,10 +327,8 @@ let convertStringToArray=(str,history)=>{
     }
   }
 
-  newList = findNegativNumber(newList,history); // Behanldar negativa nummer
   newList = findParantes(newList); // Om vi har en parantes direkt följt av ett tal skall * läggas till
-
-
+  newList = findNegativNumber(newList,history); // Behanldar negativa nummer
   return newList;
 }
 //----------------------------- END ------------------------------------------//
@@ -339,6 +338,7 @@ let convertStringToArray=(str,history)=>{
 
 //------------------- Find negativ number ----------------------------------->>
 let findNegativNumber=(newList,history)=>{
+
   newList.forEach((item,index)=>{
     if(item.operator =="-"){    // kontrollerar om vi har ett eventuelt negativt nummer att behandla
       let pos = index
@@ -347,8 +347,8 @@ let findNegativNumber=(newList,history)=>{
 
         if(isNaN(newList[pos-1])){  //kontrollerar om föregående position är ett nummer
 
-          if( newList[pos-1].operator === "(" || newList[pos-1].operator === ")" ){ // om föregående position är "(" eller ")" skall vi gå till föregående position
-
+          //if( newList[pos-1].operator === "(" || newList[pos-1].operator === ")" ){ // om föregående position är "(" eller ")" skall vi gå till föregående position
+          if(newList[pos-1].operator === ")" ){ // om föregående position är "(" eller ")" skall vi gå till föregående position
             } else { // innebär att vi har en operator +-/* root mm och minus tecknet står för ett negativt tal
                newList[pos+1] = "-" + String(newList[pos+1])
                newList.splice(pos,1)
@@ -356,6 +356,7 @@ let findNegativNumber=(newList,history)=>{
                break;
            }
         } else { // föregående pos är ett tal
+
           found = true
           break;
         }
@@ -365,9 +366,8 @@ let findNegativNumber=(newList,history)=>{
 
       if(!found){ // om vi inte hittar ett nummer framför alternativt en operator så körs denna
           if(history.length==0 ){
-            console.log("denna som skiter sig", index);
-            newList[index + 1] = "-" + String(newList[index + 1])
-            newList.splice(index,1)
+              newList[index] = "-" + String(newList[index+1])
+              newList.splice(index+1,1)
           }
       }
 
@@ -450,6 +450,8 @@ let findParantes=(newList)=>{
       } // item ) operator hittades ej
 
   }); // map end
+
+
 
 return newList;
 }

@@ -431,7 +431,7 @@ let findParantes=(newList)=>{
 
         } // while loop end
 
-      } // item ( operator hittades ej
+      } // item ) operator hittades ej
 
   }); // map end
 

@@ -38,19 +38,14 @@ let loadObjects=()=>{
       digit: function(event,str){
         let b = String(str).charCodeAt(0)
         this.checkKey(event,b,str)
-        //this.currentValue =String(this.currentValue)+String(str);
-        //document.getElementById('inputNumber').focus();  // Hur gör man enligt Vue??
 
       },
       add: function(event,key){
         this.currentValue += key;
-        //document.getElementById('inputNumber').focus();  // Hur gör man enligt Vue??
       },
       reset: function(event){
         this.currentCalc= "";
         this.currentValue="";
-        //this.polishArray = [];
-        //this.result=0;
       },
       resetHistory: function(event){
         this.currentCalc= "";
@@ -142,7 +137,7 @@ let loadObjects=()=>{
 // ---------------------  Räknar ut Polish Array ----------------------------->>
 let calcPolishArray=(list)=>{
   let stack = []
-  list.map(item=>{
+  list.forEach(item=>{
     if(!isNaN(item)){  // om det är ett nummer
       stack.push(item);
     }else{
@@ -172,7 +167,7 @@ let count = (lastNumber,nextNumber,todo)=>{
   (todo=="-") ? sum = Number(nextNumber) - Number(lastNumber):"";    // räknar ut summa av 2 sista talen
   (todo=="/") ? sum = Number(nextNumber) / Number(lastNumber):"";    // räknar ut summa av 2 sista talen
   (todo=="*") ? sum = Number(nextNumber) * Number(lastNumber):"";    // räknar ut summa av 2 sista talen
-  (todo=="√") ? sum = Math.sqrt(Number(lastNumber)):"";    // räknar ut summa av 2 sista talen
+  (todo=="√") ? sum = Math.sqrt(Number(lastNumber)):"";              // räknar ut summa av 2 sista talen
   (todo=="²") ? sum = Number(lastNumber) * Number(lastNumber):"";    // räknar ut summa av 2 sista talen
   return sum;                                                                       // lägger in ny summa
 }
@@ -188,7 +183,7 @@ let convertToPolishArray=(str)=>{
   let stackOp = [];
   let newOpArray = convertStringToArray(str); // konverterar string till lista med operator objekt och siffror
 
-  newOpArray.map(item=>{
+  newOpArray.forEach(item=>{
     if(!isNaN(item)){
       stackQueue.push(item)
     }else{
@@ -330,6 +325,116 @@ let convertStringToArray=(str)=>{
 
     }
   }
+
+  newList = findNegativNumber(newList); // Behanldar negativa nummer
+  newList = findParantes(newList); // Om vi har en parantes direkt följt av ett tal skall * läggas till
+
+
   return newList;
 }
 //----------------------------- END ------------------------------------------//
+
+
+//------------------- Find negativ number ----------------------------------->>
+let findNegativNumber=(newList)=>{
+  newList.forEach((item,pos)=>{
+    if(item.operator =="-"){    // kontrollerar om vi har ett eventuelt negativt nummer att behandla
+
+      while(newList[pos-1] && pos>0){  //Går till föregående position tills ett nummer alternativt en operator hittas.
+
+        if(isNaN(newList[pos-1])){  //kontrollerar om föregående position är ett nummer
+
+          if( newList[pos-1].operator === "(" || newList[pos-1].operator === ")" ){ // om föregående position är "(" eller ")" skall vi gå till föregående position
+
+            } else { // innebär att vi har en operator +-/* root mm och minus tecknet står för ett negativt tal
+               newList[pos+1] = "-" + String(newList[pos+1])
+               newList.splice(pos,1)
+               break;
+           }
+        } else { // föregående pos är ett tal
+          break;
+        }
+
+        pos-=1  // så länge vi inte hittar ett tal eller operator så ska vi fortsätta
+      }
+    }
+  });
+
+return newList;
+}
+//------------------- END --------------------------------------------------//
+
+
+//------------------- Find Parentes och sätter in *  ----------------------------------->>
+let findParantes=(newList)=>{
+  let operator = "*";       // sätter upp obejkt för multiplicera operatorn
+  let opPrec = 15;          // precedence av operatorn (prioritet * går före +)
+  let calcNb = 2;           // antal nummer som skall beräknas
+  let leftToRight = true;   // läsa vänter till höger
+
+  let opObj = {
+    operator,
+    opPrec,
+    calcNb,
+    leftToRight,
+  }
+
+  newList.forEach((item,pos)=>{
+    if(item.operator =="("){    // kontrollerar om vi använder parantes
+
+      while(newList[pos-1] && pos>0){  //Går till föregående position tills ett nummer alternativt en operator hittas.
+
+        if(isNaN(newList[pos-1])){  //kontrollerar om föregående position är ett nummer
+
+          if( newList[pos-1].operator === "(" || newList[pos-1].operator === ")" ){ // om föregående position är "(" eller ")" skall vi gå till föregående position
+
+          } else { // innebär att vi har en operator +-/* root mm inget behöver göras
+               //newList[pos+1] = "-" + String(newList[pos+1])
+               //newList.splice(pos,1)
+            break;
+          }
+
+        } else { // föregående pos är ett tal
+            //lägg till ett * i listan
+            newList.splice(pos,0,opObj)
+          break;
+        }
+
+        pos-=1  // så länge vi inte hittar ett tal eller operator så ska vi fortsätta
+
+      } // while loop end
+
+    } // item ( operator hittades ej
+
+
+      if(item.operator ==")"){    // kontrollerar om vi använder parantes
+
+        while(newList[pos+1] && pos < newList.length){  //Går till föregående position tills ett nummer alternativt en operator hittas.
+
+          if(isNaN(newList[pos+1])){  //kontrollerar om föregående position är ett nummer
+
+            if( newList[pos+1].operator === "(" || newList[pos+1].operator === ")" ){ // om föregående position är "(" eller ")" skall vi gå till föregående position
+
+            } else { // innebär att vi har en operator +-/* root mm inget behöver göras
+                 //newList[pos+1] = "-" + String(newList[pos+1])
+                 //newList.splice(pos,1)
+              break;
+            }
+
+          } else { // föregående pos är ett tal
+              //lägg till ett * i listan
+              newList.splice(pos,0,opObj)
+            break;
+          }
+
+          pos+=1  // så länge vi inte hittar ett tal eller operator så ska vi fortsätta
+
+        } // while loop end
+
+      } // item ( operator hittades ej
+
+  }); // map end
+
+return newList;
+}
+//------------------- END --------------------------------------------------//

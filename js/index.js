@@ -57,7 +57,7 @@ let loadObjects=()=>{
       calculate: function(event){  // summera ihop listan
         this.currentCalc = String(this.currentCalc)+String(this.currentValue);
         this.currentValue="";
-        this.polishArray = convertToPolishArray(this.currentCalc); // gör om sträng till polishArray
+        this.polishArray = convertToPolishArray(this.currentCalc,this.history); // gör om sträng till polishArray
         if(this.result!==0){
           this.polishArray.unshift(this.result)
         }
@@ -83,9 +83,9 @@ let loadObjects=()=>{
           key = str
         }
         let testIsOk = true;
-        if(this.history.length==0 && this.currentValue.length==0){ // om det inte finns någon history så måste man börja med siffror eller (
+        if(this.history.length==0 && this.currentValue.length==0){ // om det inte finns någon history så måste man börja med siffror eller ( eller - eller root
 
-          if(codeOfkey>= 48 && codeOfkey <= 57 || codeOfkey==40){
+          if(codeOfkey>= 48 && codeOfkey <= 57 || codeOfkey==40  || codeOfkey==45 || codeOfkey==8730){
           }else {
             this.showMsgToUser('INFO: Please enter numbers or "(" to start your formula.');
             testIsOk = false;
@@ -177,11 +177,11 @@ let count = (lastNumber,nextNumber,todo)=>{
 
 //------------------------ Convert String to an Array ----------------------->>
 
-let convertToPolishArray=(str)=>{
+let convertToPolishArray=(str,history)=>{
 
   let stackQueue = [];
   let stackOp = [];
-  let newOpArray = convertStringToArray(str); // konverterar string till lista med operator objekt och siffror
+  let newOpArray = convertStringToArray(str,history); // konverterar string till lista med operator objekt och siffror
 
   newOpArray.forEach(item=>{
     if(!isNaN(item)){
@@ -267,7 +267,7 @@ let convertToPolishArray=(str)=>{
 
 
 //---------------- Konverterar en sträng till en lång array ------------------>>
-let convertStringToArray=(str)=>{
+let convertStringToArray=(str,history)=>{
   let currentValue="";
   let newList = [];
   for(let i =0; i< str.length;i++){
@@ -326,7 +326,7 @@ let convertStringToArray=(str)=>{
     }
   }
 
-  newList = findNegativNumber(newList); // Behanldar negativa nummer
+  newList = findNegativNumber(newList,history); // Behanldar negativa nummer
   newList = findParantes(newList); // Om vi har en parantes direkt följt av ett tal skall * läggas till
 
 
@@ -335,11 +335,14 @@ let convertStringToArray=(str)=>{
 //----------------------------- END ------------------------------------------//
 
 
-//------------------- Find negativ number ----------------------------------->>
-let findNegativNumber=(newList)=>{
-  newList.forEach((item,pos)=>{
-    if(item.operator =="-"){    // kontrollerar om vi har ett eventuelt negativt nummer att behandla
 
+
+//------------------- Find negativ number ----------------------------------->>
+let findNegativNumber=(newList,history)=>{
+  newList.forEach((item,index)=>{
+    if(item.operator =="-"){    // kontrollerar om vi har ett eventuelt negativt nummer att behandla
+      let pos = index
+      let found = false;
       while(newList[pos-1] && pos>0){  //Går till föregående position tills ett nummer alternativt en operator hittas.
 
         if(isNaN(newList[pos-1])){  //kontrollerar om föregående position är ett nummer
@@ -349,20 +352,33 @@ let findNegativNumber=(newList)=>{
             } else { // innebär att vi har en operator +-/* root mm och minus tecknet står för ett negativt tal
                newList[pos+1] = "-" + String(newList[pos+1])
                newList.splice(pos,1)
+               found= true;
                break;
            }
         } else { // föregående pos är ett tal
+          found = true
           break;
         }
 
         pos-=1  // så länge vi inte hittar ett tal eller operator så ska vi fortsätta
       }
+
+      if(!found){ // om vi inte hittar ett nummer framför alternativt en operator så körs denna
+          if(history.length==0 ){
+            console.log("denna som skiter sig", index);
+            newList[index + 1] = "-" + String(newList[index + 1])
+            newList.splice(index,1)
+          }
+      }
+
     }
   });
 
 return newList;
 }
 //------------------- END --------------------------------------------------//
+
+
 
 
 //------------------- Find Parentes och sätter in *  ----------------------------------->>

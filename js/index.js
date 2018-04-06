@@ -287,7 +287,7 @@ let convertStringToArray=(str,history)=>{
         currentValue = "";
       }
 
-      let operator = str[i];
+      let operator = str[i]; 
       let opPrec = 13;          // precedence av operatorn (prioritet * går före +)
       let calcNb = 2;           // antal nummer som skall beräknas
       let leftToRight = true;   // läsa vänter till höger
